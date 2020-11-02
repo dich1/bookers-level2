@@ -36,6 +36,7 @@ git push -u origin main
 rails g devise:install
 rails g devise User
 rails db:migrate
+rails g devise:views
 
 devise_create_users.rb
 t.string :name
@@ -45,10 +46,11 @@ t.integer :profile_image_id
 
 rails db:migrate
 
-rails g model Book user_id:string title:string body:string
+rails g model Book user_id:integer title:string body:string
 
-rails g controller home index about
+rails g controller homes index about
 rails g controller books index show create edit update destroy
+rails g controller users index show edit update
 
 config/routes.rb
 root 'homes#index'
