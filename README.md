@@ -189,4 +189,27 @@ server {
 EOL
 
 sudo chown -R ec2-user /var/lib/nginx
+
+puma.sh
+#!/bin/bash
+DIR="/home/ec2-user/booker-level2"
+cd $DIR
+
+scp -i ~/.ssh/practice-aws.pem ~/.ssh/id_rsa.pub ec2-user@ipアドレス:.ssh/id_rsa.pub
+
+scp -i ~/.ssh/practice-aws.pem ~/.ssh/id_rsa.pub ec2-user@52.195.11.254:.ssh/id_rsa.pub
+scp -i ~/.ssh/practice-aws.pem puma.sh ec2-user@52.195.11.254:/home/ec2-user
+
+crontab -e
+@reboot /bin/bash --login /home/ec2-user/puma.sh >> /home/ec2-user/cron.log
+
+bundle exec rails s -e production >> puma.log &
+
+HOST_NAME : EC2のパブリックIPアドレスの指定
+USER_NAME：ec2-user
+PRIVATE_KEY：EC2上かCloud9上に存在する~/.ssh/id_rsaの値
+
+https://github.com/dich1/bookers-level2/settings/secrets/new
+
+cat ~/.ssh/id_rsa
 ```
